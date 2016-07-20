@@ -2,7 +2,7 @@
 <ul>
   @foreach(var author in Model["bookAuthor"])
   {
-    <li>@author.GetName()</li>
+    <li>@author.GetName()  | <a href="/book/@Model["book"].GetId()/drop/@author.GetId()">Delete this Author</a></li>
   }
 </ul>
 <h3>Add another author to this book</h3>

@@ -99,6 +99,21 @@ namespace Library
 
         return View["book.cshtml", model];
       };
+
+      Delete["/book/{book_id}/drop/{author_id}"] = parameters => {
+        Book selectedBook = Book.Find(parameters.book_id);
+        Author selectedAuthor = Author.Find(parameters.author_id);
+        selectedBook.DeleteAuthor(selectedAuthor);
+
+        Dictionary<string,object> model = new Dictionary<string,object>();
+        List<Author> bookAuthors = selectedBook.GetAuthors();
+        List<Author> allAuthors = Author.GetAll();
+
+        model.Add("book", selectedBook);
+        model.Add("bookAuthor",bookAuthors);
+        model.Add("allAuthors", allAuthors);
+        return View["book.cshtml", model];
+      };
     }
   }
 }
