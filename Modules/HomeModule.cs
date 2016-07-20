@@ -114,6 +114,16 @@ namespace Library
         model.Add("allAuthors", allAuthors);
         return View["book.cshtml", model];
       };
+      Get ["/authors/search"]= _ =>{
+        string searchString = Request.Query["author_name_search"];
+        List<Author> authorList = Author.SearchAuthor(searchString);
+        return View["author_results.cshtml", authorList];
+      };
+      Get ["/books/search"]= _ =>{
+        string searchString = Request.Query["book_title_search"];
+        List<Book> bookList = Book.SearchTitle(searchString);
+        return View["book_results.cshtml", bookList];
+      };
     }
   }
 }

@@ -226,6 +226,20 @@ namespace Library
       }
     }
 
+    public static List<Author> SearchAuthor(string searchName)
+    {
+      List<Author> allAuthors = Author.GetAll();
+      List<Author> matchAuthors = new List<Author>{};
+      foreach(Author author in allAuthors)
+      {
+        if (searchName.ToLower() == author.GetName().ToLower())
+        {
+          matchAuthors.Add(author);
+        }
+      }
+      return matchAuthors;
+    }
+
     public void Delete()
    {
      SqlConnection conn = DB.Connection();

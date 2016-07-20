@@ -224,7 +224,19 @@ namespace Library
         conn.Close();
       }
     }
-
+    public static List<Book> SearchTitle(string searchTitle)
+    {
+      List<Book> allBooks = Book.GetAll();
+      List<Book> matchBooks = new List<Book>{};
+      foreach(Book book in allBooks)
+      {
+        if (searchTitle.ToLower() == book.GetTitle().ToLower())
+        {
+          matchBooks.Add(book);
+        }
+      }
+      return matchBooks;
+    }
     public void DeleteAuthor(Author dropAuthor)
     {
       SqlConnection conn = DB.Connection();
