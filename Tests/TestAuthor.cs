@@ -100,5 +100,14 @@ namespace Library
       Assert.Equal(resultAuthors, testAuthors);
       Assert.Equal(resultBooks, testBooks);
     }
+    [Fact]
+    public void Test_Update_UpdatesAuthorInDatabase()
+    {
+      Author testAuthor = new Author("J.K. Rowling");
+      testAuthor.Save();
+      string newName = "Danielle Steele";
+      testAuthor.Update(newName);
+      Assert.Equal(newName, testAuthor.GetName());
+    }
   }
 }

@@ -190,6 +190,41 @@ namespace Library
       return Author;
     }
 
+    public void Update(string newTitle)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE books SET title = @NewTitle OUTPUT INSERTED.title WHERE id = @BookId;", conn);
+
+      SqlParameter newTitleParameter = new SqlParameter();
+      newTitleParameter.ParameterName = "@NewTitle";
+      newTitleParameter.Value = newTitle;
+      cmd.Parameters.Add(newTitleParameter);
+
+      SqlParameter BookIdParameter = new SqlParameter();
+      BookIdParameter.ParameterName = "@BookId";
+      BookIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(BookIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._title = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public void Delete()
    {
      SqlConnection conn = DB.Connection();

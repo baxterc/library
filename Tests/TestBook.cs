@@ -99,5 +99,14 @@ namespace Library
       Assert.Equal(resultAuthors, testAuthors);
       Assert.Equal(resultBooks, testBooks);
     }
+    [Fact]
+    public void Test_Update_UpdatesBookInDatabase()
+    {
+      Book testBook = new Book("Harry Potter");
+      testBook.Save();
+      string newTitle = "Harry Potter II";
+      testBook.Update(newTitle);
+      Assert.Equal(newTitle, testBook.GetTitle());
+    }
   }
 }
