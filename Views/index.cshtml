@@ -1,0 +1,24 @@
+<h1>Welcome the Library!</h1>
+
+<h2>For Librarians</h2>
+<form action="/authors/new" method="post">
+  <label for="author_name">Add an Author: </label>
+  <input type="text" name="author_name" required>
+  <button type="submit" name="button">Add this author</button>
+</form>
+<form action="/books/new" method="post">
+  <label for="book_title">Add a Book: </label>
+  <input type="text" name="book_title" required>
+  <select name="book_author" type="text">
+    @foreach(var author in Model)
+    {
+      <option value='@author.GetId()'>@author.GetName()</option>
+    }
+  </select>
+  <button type="submit" name="button">Add this book</button>
+</form>
+
+<a href="/books/all">Go to book list.</a>
+<a href="/authors/all">Go to Author list.</a>
+
+<hr>

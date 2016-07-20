@@ -1,0 +1,15 @@
+<h2>List of books by @Model["author"].GetName()</h2>
+@if(Model["books"].Count == 0)
+{
+  <h3>No books by this author.</h3>
+}
+else
+{
+  <ul>
+    @foreach(var book in Model["books"])
+    {
+      <li>@book.GetName()</li>
+    }
+  </ul>
+}
+<a href="/authors/all">Home Page</a>

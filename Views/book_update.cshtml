@@ -1,0 +1,11 @@
+<h2>Update @Model.GetName()</h2>
+
+<form action="/book/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <label for="book_title">Edit Book Title: </label>
+  <input type="text" name="book_title" required>
+  <button type="submit" name="button">Edit this Book</button>
+</form>
+
+<a href="/book/@Model.GetId()">Return to this book's information page</a>
+<a href="/books/all">Return to all books</a>

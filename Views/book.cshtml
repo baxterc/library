@@ -1,0 +1,19 @@
+<h2>@Model["book"].GetTitle() is written by:</h2>
+<ul>
+  @foreach(var author in Model["bookAuthor"])
+  {
+    <li>@author.GetName()</li>
+  }
+</ul>
+<h3>Add another author to this book</h3>
+<form action="/books/@Model["book"].GetId()" method="post">
+  <input type="hidden" name="book_id" value="@Model["book"].GetId()">
+  <select name="add_new_author">
+    @foreach(var author in @Model["allAuthors"])
+    {
+      <option value="@author.GetId()">@author.GetName()</option>
+    }
+  </select>
+  <button type="submit">Add author</button>
+</form>
+<a href="/books/all">Return to list of books.</a>
