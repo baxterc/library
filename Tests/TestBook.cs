@@ -73,5 +73,31 @@ namespace Library
 
       Assert.Equal(result, testList);
     }
+    [Fact]
+    public void Test_Delete_RemovesBookFromDatabase()
+    {
+
+      Author testAuthor1 = new Author("Mark Twain");
+      testAuthor1.Save();
+      Author testAuthor2 = new Author("J. K. Rowling");
+      testAuthor2.Save();
+
+      Book testBook1 = new Book("Adventures of Huckleberry Finn");
+      testBook1.Save();
+      Book testBook2 = new Book("Harry Potter");
+      testBook2.Save();
+      testAuthor1.AddBook(testBook1);
+      testAuthor2.AddBook(testBook2);
+      testBook1.Delete();
+
+      List<Book> resultBooks = Book.GetAll();
+      List<Book> testBooks = new List<Book> {testBook2};
+
+      List<Author> resultAuthors = Author.GetAll();
+      List<Author> testAuthors = new List<Author> {testAuthor1, testAuthor2};
+
+      Assert.Equal(resultAuthors, testAuthors);
+      Assert.Equal(resultBooks, testBooks);
+    }
   }
 }

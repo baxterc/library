@@ -190,6 +190,26 @@ namespace Library
       return Author;
     }
 
+    public void Delete()
+   {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("DELETE FROM books WHERE id = @BookId; DELETE FROM books_authors WHERE book_id = @BookId;", conn);
+
+     SqlParameter bookIdParameter = new SqlParameter();
+     bookIdParameter.ParameterName = "@BookId";
+     bookIdParameter.Value = this.GetId();
+
+     cmd.Parameters.Add(bookIdParameter);
+     cmd.ExecuteNonQuery();
+
+     if (conn != null)
+     {
+       conn.Close();
+     }
+   }
+
     public static void DeleteAll()
     {
      SqlConnection conn = DB.Connection();
