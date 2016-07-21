@@ -148,7 +148,7 @@ namespace Library
       Post ["/checkout/new"]= _ =>{
         int copyId = Request.Form["copy_id"];
         int patronId = Request.Form["patron"];
-        Checkout newCheckout = new Checkout(copyId, patronId, new DateTime(2016, 7, 21), new DateTime (2016, 8, 21), false);
+        Checkout newCheckout = new Checkout(copyId, patronId, new DateTime(2016, 7, 21), new DateTime (2016, 6, 21), false);
         newCheckout.Save();
         Copy checkedOutCopy = Copy.Find(copyId);
         checkedOutCopy.setStatus(true);
@@ -176,6 +176,10 @@ namespace Library
         model.Add("checkouts", patronCheckouts);
 
         return View["patron.cshtml",model];
+      };
+      Get["/overdue"] = _ => {
+        List<Checkout> overdues = Checkout.GetOverdue();
+        return View["overdue.cshtml", overdues];
       };
     }
   }

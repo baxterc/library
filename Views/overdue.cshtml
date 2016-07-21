@@ -1,0 +1,17 @@
+<h2>Overdue Books<h2>
+
+@if (Model.Count > 0)
+{
+  <ul>
+    @foreach (var overdue in Model)
+    {
+      <li>@overdue.GetBook().GetTitle(), due on @overdue.GetDueDate(), borrowed by <a href="/patron/@overdue.GetPatronId()">@overdue.GetPatron().GetName()</a> @overdue.GetPatron().GetPhoneNumber() </li>
+    }
+  </ul>
+}
+else
+{
+  <p>There are no overdue books!</a>
+}
+
+<a href="/">Back to Main Page</a>

@@ -132,6 +132,53 @@ namespace Library
       return allCheckouts;
     }
 
+    public static List<Checkout> GetOverdue()
+    {
+      List<Checkout> allCheckouts = Checkout.GetAll();
+      List<Checkout> overdueCheckouts = new List<Checkout>{};
+
+      foreach (Checkout checkout in allCheckouts)
+      {
+        bool checkoutReturned = checkout.GetReturned();
+        if (checkoutReturned == false && (DateTime.Today.CompareTo(checkout.GetDueDate()) > 0))
+        {
+          overdueCheckouts.Add(checkout);
+        }
+      }
+      return overdueCheckouts;
+    }
+    public Patron GetPatron()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM patrons WHERE id = @PatronId;", conn);
+
+      SqlParameter patronIdParameter = new SqlParameter();
+      patronIdParameter.ParameterName = "@PatronId";
+      patronIdParameter.Value = this.GetPatronId().ToString();
+      cmd.Parameters.Add(patronIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      int patronId = 0;
+      string patronName = null;
+      string patronPhoneNumber = null;
+      while (rdr.Read())
+      {
+        patronId = rdr.GetInt32(0);
+        patronName = rdr.GetString(1);
+        patronPhoneNumber = rdr.GetString(2);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      Patron newPatron = new Patron(patronName, patronPhoneNumber, patronId);
+      return newPatron;
+    }
     public Book GetBook()
     {
       SqlConnection conn = DB.Connection();
