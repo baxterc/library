@@ -150,6 +150,9 @@ namespace Library
         int patronId = Request.Form["patron"];
         Checkout newCheckout = new Checkout(copyId, patronId, new DateTime(2016, 7, 21), new DateTime (2016, 8, 21), false);
         newCheckout.Save();
+        Copy checkedOutCopy = Copy.Find(copyId);
+        checkedOutCopy.setStatus(true);
+        checkedOutCopy.Update(checkedOutCopy.GetBookId(), checkedOutCopy.GetStatus());
         Book checkedOutBook = newCheckout.GetBook();
 
         Dictionary<string, object> model = new Dictionary<string, object>();
