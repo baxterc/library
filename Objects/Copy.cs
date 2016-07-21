@@ -195,6 +195,7 @@ namespace Library
         conn.Close();
       }
     }
+
     public void Delete()
     {
       SqlConnection conn = DB.Connection();

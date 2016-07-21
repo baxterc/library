@@ -1,0 +1,15 @@
+<h2>You have checked out a book!</h2>
+<p>Title: @Model["book"].GetTitle()</p>
+
+Authors:
+<ul>
+  @foreach (var author in @Model["book"].GetAuthors())
+  {
+    @author.GetName()
+  }
+</ul>
+
+<p>Checkout Date: @Model["checkout"].GetCheckoutDate()</p>
+<p>Due Date: @Model["checkout"].GetDueDate()</p>
+
+<a href="/">Back to home page</a>

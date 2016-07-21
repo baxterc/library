@@ -129,14 +129,35 @@ namespace Library
       Get ["/book/{book_id}/copy/{copy_id}"]= parameter =>{
         Book selectedBook = Book.Find(parameter.book_id);
         Copy selectedCopy = Copy.Find(parameter.copy_id);
+        List<Patron> selectedPatrons = Patron.GetAll();
 
         Dictionary<string, object> model = new Dictionary<string, object>();
         List<Copy> copyOfBook = selectedBook.GetCopies();
         model.Add("book", selectedBook);
         model.Add("copy", selectedCopy);
         model.Add("copyOfBook", copyOfBook);
+        model.Add("patron", selectedPatrons);
         return View["copy.cshtml", model];
+      };
+      Post ["/patron/add"]= _ =>{
+        Patron newPatron = new Patron(Request.Form["patron_name"], Request.Form["patron_phone_number"]);
+        newPatron.Save();
+        List<Author> allAuthors = Author.GetAll();
+        return View ["index.cshtml", allAuthors];
+      };
+      Post ["/checkout/new"]= _ =>{
+        int copyId = Request.Form["copy_id"];
+        int patronId = Request.Form["patron"];
+        Checkout newCheckout = new Checkout(copyId, patronId, new DateTime(2016, 7, 21), new DateTime (2016, 8, 21), false);
+        newCheckout.Save();
+        Book checkedOutBook = newCheckout.GetBook();
 
+        Dictionary<string, object> model = new Dictionary<string, object>();
+
+        model.Add("checkout", newCheckout);
+        model.Add("book", checkedOutBook);
+
+        return View ["checkout.cshtml", model];
       };
     }
   }

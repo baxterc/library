@@ -131,6 +131,38 @@ namespace Library
       }
       return allCheckouts;
     }
+
+    public Book GetBook()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT books.* FROM checkouts JOIN copies ON (checkouts.copy_id = copies.id) JOIN books ON (copies.book_id = books.id) WHERE checkouts.id = @CheckoutId;", conn);
+
+      SqlParameter checkoutIdParameter = new SqlParameter();
+      checkoutIdParameter.ParameterName = "@CheckoutId";
+      checkoutIdParameter.Value = this.GetId().ToString();
+      cmd.Parameters.Add(checkoutIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      int bookId = 0;
+      string bookTitle = null;
+
+      while (rdr.Read())
+      {
+        bookId = rdr.GetInt32(0);
+        bookTitle = rdr.GetString(1);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      Book newBook = new Book(bookTitle, bookId);
+      return newBook;
+    }
+
     public void Save()
     {
       SqlConnection conn = DB.Connection();

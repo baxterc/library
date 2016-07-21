@@ -1,7 +1,14 @@
 <p>@Model["book"].GetTitle()</p>
+
 <ul>
   @foreach(var copy in Model["copyOfBook"])
   {
-    <li>  <form action ="/book/@Model["book"].GetId()/copy/@copy.GetId()" method="post"><li><label for="checkout@copy.GetId()">@Model["book"].GetTitle()</label>| <span>Checkedout @copy.GetStatus()</span> | <button type="submit" name="button">Checkout</button></li></form></li>
+    <li>  <form action ="/checkout/new" method="post"><li><label for="checkout@copy.GetId()">@Model["book"].GetTitle()</label>| <span>Checkedout @copy.GetStatus()</span> <input type="hidden" name="copy_id" value="@copy.GetId()"> <select name="patron">
+      @foreach(var patron in Model["patron"])
+      {
+        <option value = "@patron.GetId()">@patron.GetName()</option>
+      }
+    </select> | <button type="submit" name="button">Checkout</button></li></form></li>
   }
 </ul>
+<a href="/">Home Page</a>
