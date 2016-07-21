@@ -292,6 +292,38 @@ namespace Library
       return copies;
     }
 
+    public List<Copy> GetAvailableCopies()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT copies.* FROM copies WHERE book_id = @BookId AND status = 'false';", conn);
+
+      SqlParameter bookIdParameter = new SqlParameter();
+      bookIdParameter.ParameterName = "@BookId";
+      bookIdParameter.Value = this.GetId().ToString();
+      cmd.Parameters.Add(bookIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      List<Copy> copies = new List<Copy> {};
+
+      while (rdr.Read())
+      {
+        int copyId = rdr.GetInt32(0);
+        int bookId = rdr.GetInt32(1);
+        bool copyStatus = rdr.GetBoolean(2);
+        Copy newCopy = new Copy(bookId, copyStatus, copyId);
+        copies.Add(newCopy);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      return copies;
+    }
+
     public void Delete()
    {
      SqlConnection conn = DB.Connection();

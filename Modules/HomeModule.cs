@@ -56,7 +56,7 @@ namespace Library
         Dictionary<string,object> model = new Dictionary<string,object>();
         List<Author> bookAuthors = selectedBook.GetAuthors();
         List<Author> allAuthors = Author.GetAll();
-        List<Copy> copyOfBook = selectedBook.GetCopies();
+        List<Copy> copyOfBook = selectedBook.GetAvailableCopies();
         model.Add("book", selectedBook);
         model.Add("bookAuthor",bookAuthors);
         model.Add("allAuthors", allAuthors);
