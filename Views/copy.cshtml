@@ -1,0 +1,7 @@
+<p>@Model["book"].GetTitle()</p>
+<ul>
+  @foreach(var copy in Model["copyOfBook"])
+  {
+    <li>  <form action ="/book/@Model["book"].GetId()/copy/@copy.GetId()" method="post"><li><label for="checkout@copy.GetId()">@Model["book"].GetTitle()</label>| <span>Checkedout @copy.GetStatus()</span> | <button type="submit" name="button">Checkout</button></li></form></li>
+  }
+</ul>

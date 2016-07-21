@@ -45,6 +45,8 @@ namespace Library
         newBook.Save();
         Author addAuthor = Author.Find(Request.Form["book_author"]);
         addAuthor.AddBook(newBook);
+        Copy newCopy = new Copy(newBook.GetId());
+        newCopy.Save();
         List<Book> allBooks = Book.GetAll();
         return View["books.cshtml", allBooks];
       };
@@ -54,11 +56,11 @@ namespace Library
         Dictionary<string,object> model = new Dictionary<string,object>();
         List<Author> bookAuthors = selectedBook.GetAuthors();
         List<Author> allAuthors = Author.GetAll();
-
+        List<Copy> copyOfBook = selectedBook.GetCopies();
         model.Add("book", selectedBook);
         model.Add("bookAuthor",bookAuthors);
         model.Add("allAuthors", allAuthors);
-
+        model.Add("copyOfBook", copyOfBook);
 
         return View["book.cshtml",model];
       };
@@ -123,6 +125,18 @@ namespace Library
         string searchString = Request.Query["book_title_search"];
         List<Book> bookList = Book.SearchTitle(searchString);
         return View["book_results.cshtml", bookList];
+      };
+      Get ["/book/{book_id}/copy/{copy_id}"]= parameter =>{
+        Book selectedBook = Book.Find(parameter.book_id);
+        Copy selectedCopy = Copy.Find(parameter.copy_id);
+
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        List<Copy> copyOfBook = selectedBook.GetCopies();
+        model.Add("book", selectedBook);
+        model.Add("copy", selectedCopy);
+        model.Add("copyOfBook", copyOfBook);
+        return View["copy.cshtml", model];
+
       };
     }
   }

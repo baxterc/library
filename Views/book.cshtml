@@ -17,4 +17,8 @@
   </select>
   <button type="submit">Add author</button>
 </form>
+@foreach(var copy in Model["copyOfBook"])
+{
+  <a href="/book/@Model["book"].GetId()/copy/@copy.GetId()">@Model["book"].GetTitle()</a>
+}
 <a href="/books/all">Return to list of books.</a>
