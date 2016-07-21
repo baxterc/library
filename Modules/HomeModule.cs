@@ -162,6 +162,21 @@ namespace Library
 
         return View ["checkout.cshtml", model];
       };
+      Get ["/patron/new"]= _ =>{
+        List<Patron> allPatrons = Patron.GetAll();
+        return View ["patrons.cshtml", allPatrons];
+      };
+      Get["/patron/{id}"] = parameters => {
+        Patron selectedPatron = Patron.Find(parameters.id);
+        List<Checkout> patronCheckouts = selectedPatron.GetCheckouts();
+
+        Dictionary<string,object> model = new Dictionary<string,object>();
+
+        model.Add("patron", selectedPatron);
+        model.Add("checkouts", patronCheckouts);
+
+        return View["patron.cshtml",model];
+      };
     }
   }
 }

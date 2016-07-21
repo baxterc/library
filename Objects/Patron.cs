@@ -150,6 +150,41 @@ namespace Library
       }
       return foundPatron;
     }
+    public List<Checkout> GetCheckouts()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM checkouts WHERE patron_id = @PatronId;", conn);
+
+      SqlParameter patronIdParameter = new SqlParameter();
+      patronIdParameter.ParameterName = "@PatronId";
+      patronIdParameter.Value = this.GetId().ToString();
+      cmd.Parameters.Add(patronIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      List<Checkout> checkouts = new List<Checkout>{};
+      while (rdr.Read())
+      {
+        int checkoutId = rdr.GetInt32(0);
+        int copyId = rdr.GetInt32(1);
+        int patronId = rdr.GetInt32(2);
+        DateTime checkoutDate = rdr.GetDateTime(3);
+        DateTime dueDate = rdr.GetDateTime(4);
+        bool returned = rdr.GetBoolean(5);
+        Checkout newCheckout = new Checkout(copyId, patronId, checkoutDate, dueDate, returned, checkoutId);
+        checkouts.Add(newCheckout);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      return checkouts;
+
+    }
     public void Update(string newName, string newPhoneNumber)
     {
       SqlConnection conn = DB.Connection();
