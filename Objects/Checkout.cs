@@ -275,7 +275,25 @@ namespace Library
         conn.Close();
       }
     }
-    
+
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM checkouts WHERE id = @CheckoutId;", conn);
+
+      SqlParameter checkoutIdParameter = new SqlParameter();
+      checkoutIdParameter.ParameterName = "@CheckoutId";
+      checkoutIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(checkoutIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
      SqlConnection conn = DB.Connection();

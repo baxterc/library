@@ -285,7 +285,7 @@ namespace Library
     {
      SqlConnection conn = DB.Connection();
      conn.Open();
-     SqlCommand cmd = new SqlCommand("DELETE FROM books;", conn);
+     SqlCommand cmd = new SqlCommand("DELETE FROM books; DELETE FROM books_authors", conn);
      cmd.ExecuteNonQuery();
     }
   }

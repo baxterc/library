@@ -67,5 +67,20 @@ namespace Library
       Checkout resultCheckout = Checkout.Find(testCheckout.GetId());
       Assert.Equal(testCheckout, resultCheckout);
     }
+    [Fact]
+    public void Test_Delete_DeletesCheckoutFromDatabase()
+    {
+      Checkout firstCheckout = new Checkout(1, 1, new DateTime(2016, 7, 23), new DateTime(2016, 8, 23), false);
+      firstCheckout.Save();
+      Checkout secondCheckout = new Checkout(1, 2, new DateTime(2016, 7, 23), new DateTime(2016, 8, 23), false);
+      secondCheckout.Save();
+      List<Checkout> testCheckouts = new List<Checkout>{firstCheckout, secondCheckout};
+
+      firstCheckout.Delete();
+      testCheckouts.Remove(firstCheckout);
+      List <Checkout> resultCheckouts = Checkout.GetAll();
+
+      Assert.Equal(testCheckouts, resultCheckouts);
+    }
   }
 }
