@@ -35,6 +35,22 @@ namespace Library
         return View["authors.cshtml", allAuthors];
       };
 
+      Get["author/update/{id}"] = parameters => {
+        Author updateAuthor = Author.Find(parameters.id);
+        return View["author_update.cshtml", updateAuthor];
+      };
+
+      Patch["/author/{id}"] = parameters => {
+        Author updateAuthor = Author.Find(parameters.id);
+        updateAuthor.Update(Request.Form["update_name"]);
+
+        Dictionary<string,object> model = new Dictionary<string,object>();
+        List<Book> booksByAuthors = updateAuthor.GetBooks();
+        model.Add("author", updateAuthor);
+        model.Add("books", booksByAuthors);
+        return View["author.cshtml", model];
+      };
+
       Get["/books/all"] =_=> {
         List<Book> allBooks = Book.GetAll();
         return View["books.cshtml", allBooks];

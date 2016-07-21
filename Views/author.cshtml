@@ -1,4 +1,7 @@
-<h2>List of books by @Model["author"].GetName()</h2>
+<h2>@Model["author"].GetName()</h2>
+<a href="/author/update/@Model["author"].GetId()">Change this Author's Name</a>
+
+<h3>List of books by this author</h3>
 @if(Model["books"].Count == 0)
 {
   <h3>No books by this author.</h3>

@@ -2,7 +2,7 @@
 <ul>
   @foreach(var author in Model["bookAuthor"])
   {
-    <li>  <form action ="/book/@Model["book"].GetId()/drop/@author.GetId()" method="post"><li><label for="drop@author.GetId()">@author.GetName()</label><input type="hidden" name="_method" value="DELETE"> | <button type="submit" name="button">Remove this Author</button></li></form></li>
+    <li>  <form action ="/book/@Model["book"].GetId()/drop/@author.GetId()" method="post"><li><label for="drop@author.GetId()"><a href="/author/@author.GetId()">@author.GetName()</a></label><input type="hidden" name="_method" value="DELETE"> | <button type="submit" name="button">Remove this Author</button></li></form></li>
   }
 
 </ul>

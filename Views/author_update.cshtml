@@ -1,0 +1,10 @@
+<h2>@Model.GetName()</h2>
+<form action="/author/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <label for="update_name">Change name to: </label>
+  <input type="text" name="update_name" required>
+  <button type="submit" name="button">Update</button>
+</form>
+
+<a href="/author/@Model.GetId()">Back to this author's page</a>
+<a href="/">Back to Main Page</a>
