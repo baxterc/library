@@ -232,7 +232,7 @@ namespace Library
       List<Author> matchAuthors = new List<Author>{};
       foreach(Author author in allAuthors)
       {
-        if (searchName.ToLower() == author.GetName().ToLower())
+        if ((author.GetName().ToLower()).Contains(searchName.ToLower()))
         {
           matchAuthors.Add(author);
         }

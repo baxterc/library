@@ -230,7 +230,7 @@ namespace Library
       List<Book> matchBooks = new List<Book>{};
       foreach(Book book in allBooks)
       {
-        if (searchTitle.ToLower() == book.GetTitle().ToLower())
+        if ((book.GetTitle().ToLower()).Contains(searchTitle.ToLower()))
         {
           matchBooks.Add(book);
         }
